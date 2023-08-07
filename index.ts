@@ -23,13 +23,13 @@ const getSvg = async (file: any) => {
     formatted.children = withoutMetadata;
   }
 
-  function removeKeyRecursively(obj: any, keyToDelete: any) {
+  function removeKeyRecursively(obj: any, keysToDelete: any) {
     //if the object array is an array
     if (Array.isArray(obj)) {
       //for each value in the array, rerun the function
-      obj.forEach((item) => removeKeyRecursively(item, keyToDelete));
+      obj.forEach((item) => removeKeyRecursively(item, keysToDelete));
       //else if it's an object or null
-    } else if (typeof obj === 'object' && obj !== null) {
+    } else if (obj && typeof obj === 'object') {
       //if it has the property keyToDelete
       if (obj.hasOwnProperty(keyToDelete)) {
         //delete it 
@@ -37,15 +37,16 @@ const getSvg = async (file: any) => {
       }
       //for each value remove the key recursively
       Object.values(obj).forEach((value) =>
-        removeKeyRecursively(value, keyToDelete)
+        removeKeyRecursively(value, keysToDelete)
       );
     }
   }
-  for (let i in deleteProps) {
-    removeKeyRecursively(formatted, deleteProps[i]);
+  //See config file for more details regarding deleteProps
+  for (let props in deleteProps) {
+    removeKeyRecursively(formatted, deleteProps[props]);
   }
   const svgString = stringify(formatted);
   //Name output file here
-  fs.writeFileSync('Output2.svg', svgString);
+  fs.writeFileSync('Output.svg', svgString);
 })(inputFilePath, svgSettings);
 
