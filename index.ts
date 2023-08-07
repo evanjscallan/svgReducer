@@ -45,6 +45,7 @@ const getSvg = async (file: any) => {
     removeKeyRecursively(formatted, deleteProps[i]);
   }
   const svgString = stringify(formatted);
+  //Name output file here
   fs.writeFileSync('Output2.svg', svgString);
 })(inputFilePath, svgSettings);
 
