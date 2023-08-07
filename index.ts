@@ -1,12 +1,12 @@
 import { parse, stringify } from 'svgson';
-import { INode } from 'svgson';
 import { deleteProps, svgSettings } from './config';
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 
+//Enter file path here
 const inputFilePath: string = './images/Deloitte.svg';
 
-const getSvg = async (file) => {
+const getSvg = async (file: any) => {
   const svgFileData = await fsPromises.readFile(file);
   let outputData = await svgFileData.toString();
   return outputData;
@@ -23,7 +23,7 @@ const getSvg = async (file) => {
     formatted.children = withoutMetadata;
   }
 
-  function removeKeyRecursively(obj: INode, keyToDelete: any) {
+  function removeKeyRecursively(obj: any, keyToDelete: any) {
     //if the object array is an array
     if (Array.isArray(obj)) {
       //for each value in the array, rerun the function
